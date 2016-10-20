@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div ng-controller="LoginCtrl"   ng-cloak>
+                <md-content layout-padding>
+                    <form name="projectForm" layout="column">
+                        <md-input-container class="md-block">
+                            <label>Username</label>
+                            <input  required md-no-asterisk name="username" ng-model="username">
+                            <div ng-messages="projectForm.username.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <input required md-no-asterisk name="password" ng-model="password">
+                            <div ng-messages="projectForm.password.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <div>
+                            <md-button type="submit"  ng-click='submit()'> Submit </md-button>
+                        </div>
+                    </form>
+                </md-content>
+
+            </div>
+
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>

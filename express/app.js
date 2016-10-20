@@ -6,23 +6,22 @@ var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+
 var client = require('./client/backendclient');
-
 var routes = require('./routes/index');
-
 var users = require('./routes/users');
+
 var app = express();
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(express.static(path.join(__dirname, 'angular/app')));
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'angular/app')));
 app.use(expressSession({secret: 'mySecretKey', resave:false,saveUninitialized:true}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
