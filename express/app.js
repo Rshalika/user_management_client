@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+var client = require('./client/backendclient');
 
 var routes = require('./routes/index');
 
@@ -21,10 +22,6 @@ app.use(expressSession({secret: 'mySecretKey', resave:false,saveUninitialized:tr
 app.use(passport.initialize());
 app.use(passport.session());
 
-user = {
-  'username':'lool',
-  'password':'ieeeee'
-};
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -33,21 +30,18 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+
 passport.use(new LocalStrategy(
     function(username, password, done) {
-      // findUser(username, function (err, user) {
-      //   if (err) {
-      //     return done(err)
-      //   }
-      //   if (!user) {
-      //     return done(null, false)
-      //   }
-      //   if (password !== user.password  ) {
-      //     return done(null, false)
-      //   }
-      //   return done(null, user)
-      // })
-      return done(null,user);
+      client.retrieveUser({username:username,password:password}, function (err, user) {
+        if (err) {
+          return done(err)
+        }
+        if (!user) {
+          return done(null, false)
+        }
+        return done(null, user)
+      });
     }
 ));
 
