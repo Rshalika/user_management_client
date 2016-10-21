@@ -17,7 +17,7 @@ var client  = {
             .end(function (response) {
                 data = response.body;
                 if (data && data.success) {
-                    callback(null, new User(data.user));
+                    callback(null, data);
                 }else {
                     callback({message:data.message});
                 }
@@ -26,17 +26,15 @@ var client  = {
     },
 
     getAllUsers:function (callback) {
-        var res = [];
-        Client.get(backendUrl+'user')
+        Client.get(backendUrl+'/user')
             .end(function (response) {
                 if (response.status == 200) {
-                    for (var i = 0 ; i < data.length; i ++ ){
-                        res.push(new User([data[i]]));
+                    var data = response.body;
+                    if(data ){
+                        return callback(null, data);
                     }
-                    callback(null, res);
-                }else {
-                    callback({message:data.message});
                 }
+                return callback({message:'fail'});
             });
 
     },
@@ -48,15 +46,21 @@ var client  = {
             data: {username: user_name, password: password},
             headers: {"Content-Type": "application/json"}
         };
-        Client.post(backendUrl+'/user', args, function (data, response) {
-            if (data.success) {
-                callback(null, {message:data.message});
-            }else {
-                callback({message:data.message});
-            }
+        Client.post(backendUrl+'/user')
+            .headers(args.headers)
+            .send(args.data)
+            .end(function (response) {
+                var data = response.body;
+                if (response.status == 200) {
+                    if (data && data.success) {
+                        callback(null, data);
+                    }
+                }else{
+                    callback(data);
+                }
 
+            });
 
-        });
     },
 
     deleteUser:function(user,callback){
@@ -65,15 +69,17 @@ var client  = {
             data: {username: user_name},
             headers: {"Content-Type": "application/json"}
         };
-        Client.delete(backendUrl+'/user', args, function (data, response) {
-            if (data.success) {
-                callback(null, {message:data.message});
-            }else {
-                callback({message:data.message});
-            }
-
-
-        });
+        Client.delete(backendUrl+'/user')
+            .headers(args.headers)
+            .send(args.data)
+            .end(function (response) {
+                var data = response.body;
+                if (data.success) {
+                    callback(null, {message:data.message});
+                }else {
+                    callback({message:data.message});
+                }
+            });
     },
 
     changePrivilegies:function(user, privs,callback){

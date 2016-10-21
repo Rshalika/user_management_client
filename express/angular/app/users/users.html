@@ -1,27 +1,50 @@
+<div class="container-fluid" ng-controller="UsersCtrl" ng-cloak>
+  <div class="row">
+    <div class="col-sm-4">
+      <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+        <dov> create new user </dov>
+        <div>
+          <md-input-container>
+            <label>Username</label>
+            <input ng-model="newUser.username">
+          </md-input-container>
 
-<div ng-controller="UsersCtrl" ng-cloak layout-gt-sm="row" layout="column">
+          <md-input-container>
+            <label>Password</label>
+            <input ng-model="newUser.password">
+          </md-input-container>
+        </div>
+        <md-button type="submit"  ng-click='create()'> Submit </md-button>
+      </md-content>
+    </div>
+    <div class="col-sm-4">
+      <div  layout-gt-sm="row" layout="column">
+        <div   flex>
 
-  <div flex-gt-sm="50" flex>
+          <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+              <span>Normal</span>
+            </div>
+          </md-toolbar>
 
-    <md-toolbar layout="row" class="md-hue-3">
-      <div class="md-toolbar-tools">
-        <span>Normal</span>
+          <md-content>
+            <md-list flex>
+              <md-subheader class="md-no-sticky"></md-subheader>
+              <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="null">
+                <p {{user.username} />
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ user.password }}</h3>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-content>
+        </div>
+        <md-divider></md-divider>
       </div>
-    </md-toolbar>
-
-    <md-content>
-      <md-list flex>
-        <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="null">
-          <p {{user.username} />
-          <div class="md-list-item-text" layout="column">
-            <h3>{{ user.password }}</h3>
-          </div>
-        </md-list-item>
-      </md-list>
-    </md-content>
+    </div>
+    <div class="col-sm-4"></div>
   </div>
-  <md-divider></md-divider>
 </div>
+
 
 

@@ -10,7 +10,7 @@ angular.module('myApp.login', ['ngRoute'])
         });
     }])
 
-    .controller('LoginCtrl', function($scope, $http) {
+    .controller('LoginCtrl', function($scope, $http,$location,$timeout) {
         var serverUrl = "http://localhost:3000/login";
         $scope.username = '';
         $scope.password = '';
@@ -28,7 +28,12 @@ angular.module('myApp.login', ['ngRoute'])
                 password: $scope.password
             });
             $http.post(serverUrl,data,config).then(function (response) {
-                console.log(response);
+                if (response.status == 200){
+                    $timeout(function(){
+                        $location.path("/users");
+                    });
+
+                }
             })
         }
 

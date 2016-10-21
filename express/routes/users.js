@@ -7,7 +7,7 @@ var client = require('../client/backendclient');
 router.get('/', authenticate, function(req, res, next) {
   client.getAllUsers(function (err, users) {
     if (err){
-      res.statusCode(400).end();
+      res.status(400).end();
       return;
     }
     res.send(users);
@@ -15,11 +15,11 @@ router.get('/', authenticate, function(req, res, next) {
 });
 
 router.post('/', authenticate, function(req, res, next) {
-  var username = res.get('username');
-  var password = res.get('password');
+  var username = req.body.username;
+  var password =req.body.password;
   client.createUser({username:username,password:password},function (err, users) {
     if (err){
-      res.statusCode(400).end();
+      res.status(400).end();
       return;
     }
     res.send(users);
