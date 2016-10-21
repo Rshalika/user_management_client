@@ -30,7 +30,7 @@ router.delete('/', authenticate, function(req, res, next) {
   var username = res.get('username');
   client.deleteUser({username:username},function (err, users) {
     if (err){
-      res.statusCode(400).end();
+      res.status(400).end();
       return;
     }
     res.send(users);
@@ -38,10 +38,11 @@ router.delete('/', authenticate, function(req, res, next) {
 });
 
 router.post('/privs', authenticate, function(req, res, next) {
-  var privs = res.get('privs');
+  var privs = req.body.privs;
+  var username = req.body.username;
   client.changePrivilegies({username:username},privs,function (err, users) {
     if (err){
-      res.statusCode(400).end();
+      res.status(400).end();
       return;
     }
     res.send(users);

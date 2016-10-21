@@ -6,6 +6,9 @@ var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+var Client = require('unirest');
+Client.post("http://localhost:8080/user/init")
+    .send("").end(function (response) {});
 
 var client = require('./client/backendclient');
 var routes = require('./routes/index');

@@ -85,18 +85,22 @@ var client  = {
     changePrivilegies:function(user, privs,callback){
         var user_name = user.username;
         var args = {
-            data: {username: user_name, new_privs:privs},
+            data: {username: user_name, privileges:privs},
             headers: {"Content-Type": "application/json"}
         };
-        Client.post(backendUrl+'/user/privs', args, function (data, response) {
-            if (response.status == 200) {
-                callback(null, {message:"fail"});
-            }else {
-                callback({message:"fail"});
-            }
+        Client.post(backendUrl+'/user/privs')
+            .headers(args.headers)
+            .send(args.data)
+            .end(function (response) {
+                var data = response.body;
+                if (response.status == 200) {
+                    callback(null, {message:"fail"});
+                }else {
+                    callback({message:"fail"});
+                }
 
+            });
 
-        });
     },
     adminChangePassword : function (user, callback) {
         var user_name = user.username;
