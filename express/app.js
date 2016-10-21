@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressSession({secret: 'mySecretKey', resave:false,saveUninitialized:true}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.set('view engine', 'jade');
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -33,9 +34,6 @@ passport.deserializeUser(function(user, done) {
 passport.use(new LocalStrategy(
     function(username, password, done) {
       client.retrieveUser({username:username,password:password}, function (err, user) {
-        if (err) {
-          return done(err)
-        }
         if (!user) {
           return done(null, false)
         }
@@ -59,6 +57,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+app.set('env','development');
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <div ng-controller="LoginCtrl"   ng-cloak>
+            <div ng-controller="ResetCtrl"   ng-cloak>
                 <md-content layout-padding>
                     <form name="projectForm" layout="column">
                         <md-input-container class="md-block">
@@ -14,9 +14,25 @@
                             <h1>You entered: {{username}}</h1>
                         </md-input-container>
                         <md-input-container class="md-block">
-                            <label>Password</label>
-                            <input required md-no-asterisk name="password" ng-model="password">
+                            <label>Old Password</label>
+                            <input required md-no-asterisk type="password" name="password" ng-model="old">
                             <div ng-messages="projectForm.password.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <label>New Password </label>
+                            <input required md-no-asterisk type="password" name="username" ng-model="newPass">
+                            <div ng-messages="projectForm.username.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <label>Confirm New Password </label>
+                            <input required md-no-asterisk type="password" name="username" ng-model="confirm">
+                            <div ng-messages="projectForm.username.$error">
                                 <div ng-message="required">This is required.</div>
                             </div>
                         </md-input-container>

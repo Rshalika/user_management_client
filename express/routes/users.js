@@ -36,7 +36,8 @@ router.delete('/', authenticate, function(req, res, next) {
     res.send(users);
   })
 });
-router.delete('/privs', authenticate, function(req, res, next) {
+
+router.post('/privs', authenticate, function(req, res, next) {
   var privs = res.get('privs');
   client.changePrivilegies({username:username},privs,function (err, users) {
     if (err){
@@ -46,6 +47,45 @@ router.delete('/privs', authenticate, function(req, res, next) {
     res.send(users);
   })
 });
+
+router.post('/changepassword', function(req, res, next) {
+  var user = {};
+  user.username = req.body.username;
+  user.old = req.body.old;
+  user.newPass = req.body.newPass;
+  user.confirm = req.body.confirm;
+
+  client.adminChangePassword(user, function (err, users) {
+    if (err) {
+      res.statusCode(400).end();
+      return;
+    }
+    res.status(200).end();
+  });
+
+});
+
+
+router.post('/userprivs', authenticate, function(req, res, next) {
+  var user = {};
+  user.username = res.get('username');
+
+  client.getUserPrivs(user, function (err, result) {
+    if (err) {
+      res.statusCode(400).end();
+      return;
+    }
+    res.status(200).send(result.data);
+  });
+
+});
+
+
+
+
+
+
+
 
 
 

@@ -11,20 +11,22 @@ angular.module('myApp.login', ['ngRoute'])
     }])
 
     .controller('LoginCtrl', function($scope, $http) {
-        var serverUrl = "http://localhost:3000/user";
-        $scope.username = "";
+        var serverUrl = "http://localhost:3000/login";
+        $scope.username = '';
         $scope.password = '';
-        var data = {
-            fName: $scope.username,
-            lName: $scope.password
-        };
+
+
+        console.log($scope.username);
 
         var config = {
             headers : {
-                'Content-Type': 'application/json;'
-            }
+                'Content-Type': 'application/x-www-form-urlencoded'            }
         };
         $scope.submit = function () {
+            var data = $.param({
+                username: $scope.username,
+                password: $scope.password
+            });
             $http.post(serverUrl,data,config).then(function (response) {
                 console.log(response);
             })

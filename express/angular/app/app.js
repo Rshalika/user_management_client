@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.users',
   'myApp.login',
   'myApp.version',
+  'myApp.reset',
   'ngMaterial',
     'ngMessages'
 
